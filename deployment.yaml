@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: miniflux
+  labels:
+    app: miniflux
+spec:
+  # Scaling controlled separately
+  # replicas: 1
+  selector:
+    matchLabels:
+      app: miniflux
+  template:
+    metadata:
+      labels:
+        app: miniflux
+    spec:
+      containers:
+        - name: miniflux
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: url
+                  name: miniflux-db
+                  optional: false
+          envFrom:
+            - configMapRef:
+                name: miniflux-config
+                optional: false
+          image: ghcr.io/miniflux/miniflux:2.1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: web

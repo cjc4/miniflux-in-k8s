@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: miniflux-cjc4-com
+  namespace: cjc4
+spec:
+  secretName: miniflux-cjc-com-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+      - jetstack
+  commonName: miniflux.cjc4.com
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - miniflux.cjc4.com
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer

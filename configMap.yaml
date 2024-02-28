@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: miniflux-config
+data:
+  BASE_URL: "https://miniflux.cjc4.com"
+  POLLING_FREQUENCY: "15"
+  RUN_MIGRATIONS: "1"
+  WEBAUTHN: "1"
