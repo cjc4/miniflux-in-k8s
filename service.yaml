@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: miniflux
+  namespace: cjc4
 spec:
   ports:
     - name: web
