@@ -18,6 +18,7 @@ spec:
     spec:
       containers:
         - name: miniflux
+          image: ghcr.io/miniflux/miniflux:2.1.2
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -29,7 +30,6 @@ spec:
             - configMapRef:
                 name: miniflux-config
                 optional: false
-          image: ghcr.io/miniflux/miniflux:2.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
