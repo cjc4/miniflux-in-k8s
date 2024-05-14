@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: miniflux-cjc-com-tls
   duration: 2160h # 90d
-  renewBefore: 360h # 15d
+  renewBefore: 720h # 30d
   subject:
     organizations:
       - jetstack
