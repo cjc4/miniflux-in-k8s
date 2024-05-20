@@ -7,10 +7,10 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`miniflux.cjc4.com`)
-    kind: Rule
-    services:
-    - name: miniflux
-      port: web
+    - match: Host(`miniflux.cjc4.com`)
+      kind: Rule
+      services:
+        - name: miniflux
+          port: web
   tls:
     secretName: miniflux-cjc-com-tls
