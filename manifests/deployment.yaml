@@ -6,13 +6,19 @@ metadata:
   labels:
     app: miniflux
 spec:
-  # Scaling controlled separately
+  ## Scaling controlled separately
   # replicas: 1
   selector:
     matchLabels:
       app: miniflux
   template:
     metadata:
+      annotations:
+        ## Enable linkerd debug sidecar
+        # config.linkerd.io/debug-image: ghcr.io/buoyantio/debug
+        # config.linkerd.io/enable-debug-sidecar: "true"
+        ## Enable linkerd sidecar proxy injection
+        linkerd.io/inject: enabled
       labels:
         app: miniflux
     spec:
