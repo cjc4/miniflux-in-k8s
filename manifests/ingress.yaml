@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: miniflux-ingress
+  namespace: cjc4
+  annotations:
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: miniflux.cjc4.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: miniflux
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - miniflux.cjc4.com
+      secretName: miniflux-cjc-com-tls
