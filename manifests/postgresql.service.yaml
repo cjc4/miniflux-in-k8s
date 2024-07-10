@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: miniflux-db
+  namespace: cjc4
+spec:
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app.kubernetes.io/instance: miniflux-postgresql

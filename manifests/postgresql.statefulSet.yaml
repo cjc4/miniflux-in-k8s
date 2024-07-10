@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: miniflux-postgresql
+  namespace: cjc4
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/instance: miniflux-postgresql
+    app.kubernetes.io/version: "16.3"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: miniflux
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: miniflux-postgresql
+  serviceName: "miniflux-db"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: postgresql
+        app.kubernetes.io/instance: miniflux-postgresql
+        app.kubernetes.io/version: "16.3"
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: miniflux
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:16.3
+          env:
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: miniflux-db-credentials
+                  optional: false
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: miniflux-db-credentials
+                  optional: false
+          ports:
+            - containerPort: 5432
+              name: postgresql
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "manual-iscsi-hdd"
+        resources:
+          requests:
+            storage: 16Gi
+

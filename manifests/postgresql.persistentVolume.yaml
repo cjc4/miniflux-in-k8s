@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+  namespace: cjc4
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 16Gi
+  iscsi:
+    targetPortal: 192.168.220.15
+    iqn: iqn.2024-01.arpa.home:miniflux-postgresql
+    lun: 0
+    fsType: ext4
+    readOnly: false
+    chapAuthDiscovery: true
+    chapAuthSession: true
+    secretRef:
+      name: truenas-iscsi-auth
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual-iscsi-hdd
+  volumeMode: Filesystem
